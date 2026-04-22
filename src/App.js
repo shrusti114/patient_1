@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./index.css";
 
 const city = ['Valsad','surat'];
 
@@ -10,17 +11,17 @@ function App() {
 
   
   useEffect(() => {
-    const storedUsers = localStorage.getItem('user');
+    const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
       setUsers(JSON.parse(storedUsers));
     } else {
        
       fetch('/data/data-store.json')
-    
+
         .then(res => res.json())
         .then(data => {
           setUsers(data);
-          localStorage.setItem('user', JSON.stringify(data));
+          localStorage.setItem('users', JSON.stringify(data));
         });
     }
   }, []);
@@ -78,9 +79,9 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Patient Regsition
-        </h1>
-      <form onSubmit={handleSubmit} className="form">
+      <center><h1>Patient Regsition
+        </h1></center>
+     <center> <form onSubmit={handleSubmit} className="form">
         <label>Name : </label>
         <input 
           type="text"
@@ -148,7 +149,7 @@ function App() {
             Other
           </label>
         </div>
-        <select name="city" value={form.city} onChange={handleChange} className="select">
+        <select name="city" value={form.city} onChange={handleChange} className="select ">
        
           {city.map(c => (
             <option key={c} value={c}>
@@ -157,8 +158,8 @@ function App() {
           ))}
         </select>
         <button type="submit" className="btn submit-btn">{editMode ? 'Update' : 'Add'}</button>
-      </form>
-
+      </form></center>
+          
       <div className="buttons-row">
         <button onClick={handleSave} className="btn save-btn">Save Data</button>
         <button onClick={resetData} className="btn reset-btn">Reset Data</button>
@@ -170,8 +171,8 @@ function App() {
         <thead>
           <tr>
             <th>Username</th>
-            <th>phone</th>
-            <th>email</th>
+            <th>Phone</th>
+            <th>Email</th>
             <th>Gender</th>
             <th>City</th>
             <th>Actions</th>
@@ -186,8 +187,11 @@ function App() {
           {users.map(u => (
             <tr key={u.id}>
               <td>{u.username}</td>
+                  <td>{u.phone}</td>
+               <td>{u.email}</td>
+            
               <td>{u.gender}</td>
-              <td>{u.country}</td>
+              <td>{u.city}</td>
               <td>
                 <button onClick={() => handleEdit(u.id)} className="btn edit-btn">Edit</button>
                 <button onClick={() => handleDelete(u.id)} className="btn delete-btn">Delete</button>
